@@ -1,7 +1,8 @@
-Project Summary
----------------
 #Getting and Cleaning Data Course Project - Code Book
 Paweł Dębiec
+
+Project Summary
+---------------
 
 The purpose of course project was demonstrating ability to collect and clean data sets. The goal was to preapare a tidy data set, according to instructions given, based on real case data obtained from UCI Machine Learning Repository: Human Activity Recognition Using Smartphones Data Set.
 
@@ -61,9 +62,9 @@ list.files(".\\data\\UCI HAR Dataset", recursive=TRUE)
     ## [27] "train/X_train.txt"                           
     ## [28] "train/y_train.txt"
 
-As we will not use data from Inertial Signals folders, only the followign files will be loaded:
+As we will not use data from Inertial Signals folders, only the following files will be loaded:
 
--   "activity\_labels.txt" - resolves the activities codes into decriptive names
+-   "activity\_labels.txt" - resolves the activities codes into descriptive names
 -   "features.txt" - provides names of 561 numeric features
 -   "test/subject\_test.txt" - identifier of subject performing activities within test set - one column, 2947 observations
 -   "test/X\_test.txt" - set of 561 numeric features for test set - 2947 observations.
@@ -110,7 +111,7 @@ Then we stack the train and test datasets together as requested (Point1)
 full <-rbind(train, test)
 ```
 
-As it was requrested to only select measurements on the mean and standard deviation (point2), we build a logical vector indicating which measures contain mean() or std() in their names.
+As it was requested to only select measurements on the mean and standard deviation (point2), we build a logical vector indicating which measures contain mean() or std() in their names.
 
 ``` r
 stdOrMean <- grepl("([mM]ean\\(\\))|([sS]td\\(\\))", features[,2])
@@ -128,13 +129,13 @@ Then we join descriptive activity labels (point3). (I decided to keep the activi
 readyDataSet4 <- merge(x=selected, y=activity_labels, by = "activityCode", all.x = TRUE)
 ```
 
-Additionally, just to indicate the column doesn't reflect numeric value but a categor, we turn subjects into factors
+Additionally, just to indicate the column doesn't reflect numeric value but a category, we turn subjects into factors
 
 ``` r
 readyDataSet4$subject <- as.factor(readyDataSet4$subject)
 ```
 
-As we took care of the varaible names just after loading file and used the descriptive variable names as specified in features\_Info of the original dataset we consider point 4 satisfied
+As we took care of the variable names just after loading file and used the descriptive variable names as specified in features\_Info of the original dataset we consider point 4 satisfied
 
 ``` r
 names(readyDataSet4)
